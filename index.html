@@ -121,9 +121,17 @@
 
     const jokeElement = document.querySelector("#joke");
     const jokeButton = document.querySelector("#joke-button");
+    let previousJokeIndex = null;
 
     jokeButton.addEventListener("click", () => {
-      const randomIndex = Math.floor(Math.random() * jokes.length);
+      const availableJokeCount = jokes.length - (previousJokeIndex === null ? 0 : 1);
+      let randomIndex = Math.floor(Math.random() * availableJokeCount);
+
+      if (previousJokeIndex !== null && randomIndex >= previousJokeIndex) {
+        randomIndex += 1;
+      }
+
+      previousJokeIndex = randomIndex;
       jokeElement.textContent = jokes[randomIndex];
     });
   </script>
